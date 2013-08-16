@@ -1,4 +1,3 @@
-#require 'pry'
 class Deck
 
   def initialize
@@ -70,10 +69,7 @@ end
 
 class GameMaster
 
-  attr_accessor :current_word, :current_def
-
   def initialize(txt_file)
-    #binding.pry
     @TheDeck = Controller.control_sequence(txt_file)
   end
 
@@ -137,8 +133,6 @@ class GameMaster
   def exit_game
     puts "Thanks for playing!"
     exit
-    #Controller.save
-    #break
   end
 
 end
