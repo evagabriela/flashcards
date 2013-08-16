@@ -25,15 +25,35 @@ end
 
 
 class Controller
+ 
+  def input_and_parse_file(filename) #File name MUST BE IN THE SAME DIRECTORY 
+    filename_edit = "./" + filename
+    file_open = File.open(filename_edit, "r") 
+    file_string = file_open.read
 
+    file_array = file_string.split('\n')
 
-  def input_and_parse_file(filename) #reads in file, parses word-definition pairs
-    @input_file = whatever from txt file    
+      def_array = []
+      key_array =[]
+      n = 0
+      file_array.each_with_index do |string,index| 
+        if index == 3*n
+            def_array << string
+        elsif index == (3 * n) +1
+            key_array << string
+        end
+      end
+        @input_file = key_array.zip(def_array)
+      
   end
+
 
   def populate_deck #sends word and definition strings to Deck.add_card
     @deck_object = Deck.new
-    #Deck.add_card (word-string, definition-string)
+
+    @input_file.each do |string|
+      @deck_object.add_card(string[0],string[1])
+    end
   end
 
   def self.control_sequence(txt_filename)
@@ -42,10 +62,6 @@ class Controller
       populate_deck
       @deck_object
   end
-
-  # def save_to_file(filename) #outputs Cards to file
-  #   #parsing
-  # end
 
 end
 
