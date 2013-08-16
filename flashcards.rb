@@ -47,6 +47,8 @@ end
 
 class GameMaster
 
+  attr_accessor :current_word, :current_def
+
   def initialize(txt_file)
      @TheDeck = Controller.control_sequence(txt_file)
   end
@@ -54,34 +56,64 @@ class GameMaster
   def run_game
     #Welcome Message
     puts "Welcome to Ruby Flash Cards. "
-    puts "To play, just enter the correct term for each definition."  
+      sleep 0.1 
+    puts "To play, just enter the correct term for each definition."
+      sleep 0.1 
     puts "Ready?  Go!"
+      sleep 0.1 
 
+    keep_looping = true
 
-    #NEXT_CARD_LOOP
-      #Pick a card
-      current_card = @TheDeck.sample_card
-      current_word = current_card.first
-      current_def = current_card.last
+    while keep_looping
+      pick_a_card
+      
+      puts "Definition:"
+      puts @current_def
+        sleep 0.5
 
-      #Read definition
+      check_guess (gets.chomp.downcase!)
+        sleep 0.1
+      
+      puts "Ready for next flashcard? y/n"
+      keep_looping = prompt_user(gets)
+    end
 
-      #GUESS_LOOP
-        guess = gets.chomp
-          #wrong answer
-          #quit if  "quit" || "q"
-      #END_GUESS_LOOP
-
-      #Next Card? gets Y/N
-        #break if gets == "N"
-    #END_NEXT_CARD_LOOP
-
-    #Exit Message
     puts "Thanks for playing!"
+    exit_game
+
   end
 
-  def guess
+  def pick_a_card
+    current_card = @TheDeck.sample_card
+    @current_word = current_card.first
+    @current_def = current_card.last
+  end
 
+  def check_guess (guess, current_word)
+    guess_count = 1
+    while true
+      puts "Guess ##{guess_count}:"
+      if guess == @current_word
+        puts "Correct!"
+        puts "You got it in #{guess} guess!"
+      elsif guess == "quit" || "exit" || "q" ||
+        break
+      else 
+        puts "Wrong answer."
+      end
+    end
+  end
+
+  def prompt_user (input.downocase!)
+      true if input == "\r" || "y" || "yes"
+      false if input == "n" || "no"
+      exit_game if input == "quit" || "exit" || "q"
+      puts "Dude, type 'y' to continue:"
+      prompt_user(gets)
+  end
+
+  def exit_game
+    #Controller.save
   end
 
 end
