@@ -1,20 +1,24 @@
-
 class Deck
 
   def initialize
-    @card_deck_hash
-    @temp_deck_hash
+    @card_deck = {}
+    @temp_deck = []
   end
 
-  def add_card (word, definition) #adds to card_deck hash
+  def add_card(word, definition) #adds to card_deck hash
+    @card_deck[word] = definition
   end
 
-  def shuffle #shuffles card_deck_hash, 
-    ## card_deck_hash >> array.shuffle >> temp_deck_hash
+  def shuffle #shuffles card_deck and stores in temp_deck array
+    @temp_deck = @card_deck.to_a.shuffle
   end
 
-  def sample_card # returns word, definition
-    #if temp_deck is empty, shuffle card_deck and repopulate temp_deck
+  def sample_card
+    if @temp_deck == []
+      return @temp_deck
+    else
+      return @temp_deck.pop # => [word, definition]
+    end
   end
 
 end
@@ -70,4 +74,3 @@ class GameMaster
 end
 
 GameMaster.new('flashcards.txt')
-
