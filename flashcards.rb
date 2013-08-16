@@ -1,4 +1,3 @@
-
 class Deck
 
   def initialize
@@ -46,21 +45,39 @@ class Controller
 end
 
 
-
 class GameMaster
 
-  def initialize(txt_filename)
-     @working_deck = Controller.control_sequence(txt_filename)
+  def initialize(txt_file)
+     @TheDeck = Controller.control_sequence(txt_file)
   end
 
   def run_game
+    #Welcome Message
+    puts "Welcome to Ruby Flash Cards. "
+    puts "To play, just enter the correct term for each definition."  
+    puts "Ready?  Go!"
 
-    #Welcome message
-    #
-    #first/next card loop
-      #guess loop (gets)
-      #quit
-    #exit message
+
+    #NEXT_CARD_LOOP
+      #Pick a card
+      current_card = @TheDeck.sample_card
+      current_word = current_card.first
+      current_def = current_card.last
+
+      #Read definition
+
+      #GUESS_LOOP
+        guess = gets.chomp
+          #wrong answer
+          #quit if  "quit" || "q"
+      #END_GUESS_LOOP
+
+      #Next Card? gets Y/N
+        #break if gets == "N"
+    #END_NEXT_CARD_LOOP
+
+    #Exit Message
+    puts "Thanks for playing!"
   end
 
   def guess
@@ -70,4 +87,5 @@ class GameMaster
 end
 
 GameMaster.new('flashcards.txt')
+
 
